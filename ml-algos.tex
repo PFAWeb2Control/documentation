@@ -1,0 +1,163 @@
+\chapter{Bibliothèques de machine learning}
+
+\section{Scikit-learn}
+    
+    Scikit-learn est une bibliothèque Python proposant différents algorithmes de machine learning. Elle permet d'effectuer de l'apprentissage supervisé (16 catégories d'algorithmes dont SVM, arbres de décision et plus proches voisins) ainsi que de l'apprentissage non supervisé (dont 9 algorithmes de clustering). 
+
+L'utilisation de réseaux de neuronnes est possible, mais uniquement en non supervisé (Restricted Boltzmann machines).
+
+La documentation de cette bibliothèque est disponible à l'adresse \url{http://scikit-learn.org/stable/documentation.html}
+
+\subsection{Apprentissage supervisé}
+
+En supervisé, on souhaite associer à chaque vecteur en entrée, une classe. Cela se fait en deux étapes. Dans un premier temps, l'entraînement de notre classificateur sur des données déjà classées. Puis une fois entraîné, la prédiction de classe sur des données inconnues.
+
+Pour cela, il faut donc déjà posséder un ensemble de vecteurs, ainsi que la classe à laquelle on peut les associer respectivement.
+
+\subsubsection{Ensemble de données}
+
+Un exemple de données fournies par la bibliothèque est Digits. Il a pour objectif d'entraîner un classificateur à reconnaître un chiffre écrit à la main, et contient donc plusieurs centaines d'échantillons.
+
+Cet ensemble de données se décompose ainsi:
+\begin{itemize}
+\item Un attribut \textbf{images}, qui est un ensemble de matrices d'entiers décrivant quels pixels sont écrits. Cet attribut correspond à la donnée brute à analyser.
+\item Un attribut \textbf{data}, qui est un ensemble de vecteurs correspondant à l'entrée de notre algorithme de machine-learning. Ici, la matrice est simplement mise sous forme de vecteurs sans autre changement. Dans le cas général, il faut réfléchir à une manière de vectoriser notre donnée (quelles données conserver, sous quelle forme).
+\item Un attribut \textbf{target}, qui est un tableau d'entiers, qui correspondent respectivement à la classe du vecteur correspondant. Cette donnée permet d'indiquer à un classificateur le résultat attendu.
+\end{itemize}
+
+\subsubsection{Fonctionnement}
+
+Pour utiliser cette bibliothèque, la première étape est d'instancier un classificateur. C'est cet outil qui apprend et prédit la classe d'une nouvelle donnée.
+
+Pour cela, on importe de la bibliothèque, le module concernant l'algorithme souhaité. Pour l'algorithme SVM par exemple, on utilisera:
+\begin{Verbatim}
+from sklearn import svm
+\end{Verbatim}
+Puis on crée le classificateur en utilisant la méthode adéquate contenue dans ce module, et en spécifiant les paramètres à partir de la documentation:
+\begin{Verbatim}
+classificateur = svm.SVC(gamma=0.001, C=100.)
+\end{Verbatim}
+
+On peut alors accéder à deux fonctions:
+\begin{itemize}
+\item classificateur.fit(X,x) : Apprend au classificateur que le vecteur X correspond à la classe x (des tableaux peuvent être passés en paramètre pour apprendre en une seule fois)
+\item classificateur.predict(X) : Demande la classe du vecteur X\\
+\end{itemize}
+
+Ces instructions sont suffisantes pour faire fonctionner l'apprentissage. On constate qu'aucune compréhension de l'algorithme utilisé n'est nécessaire, et que changer d'algorithme se fait très simplement.\\
+
+Des outils ($pickle$ ou $joblib$) sont également disponibles dans la bibliothèque pour sauvegarder un classificateur, et le recharger plus tard. On évite ainsi de devoir recommencer l'apprentissage de zéro à chaque utilisation.
+
+\subsection{Apprentissage non supervisé}
+
+Chaque catégorie étant très différente des autres, on n'observera ici que le \textit{clustering} qui nous intéresse particulièrement.
+
+Dans cette méthode, on fournit un certain nombre de vecteurs à notre classificateur, et celui-ci forme des groupes selon des critères propres à l'algorithme. En pratique, le fonctionnement de la bibliothèque pour ce mode est très semblable à celui de l'apprentissage supervisé.
+On commence par importer le module de clustering, puis on instancie le classificateur avec la méthode correspondant à l'algorithme qui nous intéresse. Ici, on utilise l'algorithme K-means, qui demande en paramètre le nombre de classes que l'on souhaite former:
+\begin{Verbatim}
+from sklearn import cluster
+classificateur = cluster.KMeans(n_clusters=3)
+\end{Verbatim}
+On a alors accès cette fois uniquement à la fonction $classificateur.fit(X)$ qui permet d'insérer un vecteur dans notre groupe de données à analyser. Quand tous nos vecteurs sont insérés, on peut alors lire l'attribut $labels\_$ du classificateur, qui contient un tableau d'entiers, représentant la classe de chaque vecteur.\\
+
+Ici aussi, la fonctionnement de l'algorithme utilisé est entièrement cachée, et rend l'utilisation de la bibliothèque assez simple et intuitif.
+
+
+\section{Tensorflow}
+
+TensorFlow est la librairie de machine learning développée par Google. Elle était initialement utilisée pour le développement de produits commerciaux, et à été récemment rendu open source (début Novembre).
+
+\subsection{APIs}
+
+\subsubsection{Python}
+
+La libraire TensorFlow en elle-même est écrite en C++, L'interface Python n'est donc qu'une surcouche. Il s'agit pourtant de l'API la plus documentée et la plus complète. En effet, celle-ci rassemble beaucoup plus d'outils qui rendent l'interfacage avec d'autres framework plus simple, notamment grâce à la flexibilité qu'offre le Python. De plus, la plupart des exemples et tutoriaux sont fait en Python, ce qui facilite la compréhension.
+
+\subsubsection{C++}
+
+L'API C++ est assez peu documentée, et de manière générale assez peu utilisations de haut niveau de la librairie. Son avantage réside principalement dans l'accès plus direct à la librairie, ce qui permet par exemple de gérer des réglages plus fin, de développer un plugin annexe, mais aussi et surtout de pouvoir définir ses propres opérations pour ensuite les utiliser de façon simple et efficace en Python.
+
+\subsection{Points forts}
+
+\begin{itemize}
+\item Utilisation d'opérations.
+
+La brique de base qui permet le fonctionnement de cette librairie est l'opération. Il s'agit d'une fonction mathématique prédéfinie qui sera utilisée pour définir le modèle à apprendre. Les opérations peuvent être combinées pour créer des fonctions complexes simplement. Une grande liste d'opérations de bases sont disponibles, ainsi que la plupart des opérations utilisées en machine learning.
+Cette façon de définir un modèle permet une utilisation intuitive de la librairie, et adaptée aux problèmes à résoudre.
+\\
+\item Fonctionnement par sessions. 
+
+Les performances de Python pour des calculs lourd tels que nécessaire pour le machine learning sont assez médiocre. C'est pourquoi la plupart des librairies de calcul en python, telles que NumPy, ont une implémentation dans un autre langage (typiquement, du C). TensorFlow n'échappe pas à cette règle, et va même encore plus loin. En effet, aucun calcul n'est fait lors de l'utilisation des opérations ; cependant, un graphe va être construit. Ensuite, l'utilisateur créer et lance une session sur ce graphe, ce qui à pour effet d'exécuter toutes les opérations nécessaires à la suite.
+Ceci permet d'optimiser le déroulement des algorithme grâce au graphe construit, mais aussi permet d'éviter de revenir à l'interface python entre chaque opération. Ainsi il est possible d'obtenir la flexibilité du Python avec les performances du C++.
+\\
+\item Un librairie complète. 
+
+En effet il n'y a pas de réelle limitation sur les algorithmes de machine learning implémentables avec TensorFlow. Des problèmes peuvent survenir sur des types d'algorithmes qui n'ont jamais été réalisés avec TensorFlow, car il peut être nécessaire de créer ses propres opérations personnalisées, ce qui retire quelque peu l'intérêt d'utiliser une librairie. 
+Cependant, il existe  un grand nombre d'implémentations d'algorithmes avancés et d'exemples déjà présents dans la documentation, ce qui rend ce genre de cas suffisamment exceptionnel pour qu'il soit probable que le même problème surgisse avec d'autres librairies de machine learning.
+\end{itemize}
+
+
+
+\subsection{Structure}
+
+Dans cette partie, nous allons donner un peu plus de détails sur l'utilisation pratique de TensoFlow, aggrémentés d'un exemple sur la reconnaissance de digits à partir d'images (MINST).
+
+\subsubsection{Définition du modèle}
+
+Dans un premier lieu, il faut déclarer nos tenseurs. Les tenseurs sont des objets python qui représentent une donnée qui sera utilisée dans le graphe. Il peux s'agir de paramètres, d'entrées ou de sorties. 
+Les tenseurs de type Variable sont adaptés pour enregistrer des paramètres, tandis que pour les entrées, des placeholder seront utilisés pour mieux gérer tout type de données, qui pourraient par exemple être sous forme de flux.
+Un fois ceci fait, les variables de sorties peuvent être simplement définies à l'aide des opérations, ces dernières étant conçues pour prendre des tenseurs en argument.
+
+        \lstset{style=Python}
+        \begin{lstlisting}[caption=Exemple de définition d'un modèle linéaire pour le cas du MINST]
+#digit en 28*28 px = 784 pixels
+# 10 digits
+
+#Placeholder pour l'entree des donnees d'entrainement
+x = tf.placeholder(tf.float32, [None, 784])
+
+#Placeholder pour l'entree des labels connus sur les images (sortie attendue)
+y_ = tf.placeholder(tf.float32, [None, 10])
+
+# W et b, les matrices a apprendre
+W = tf.Variable(tf.zeros([784, 10]))
+b = tf.Variable(tf.zeros([10]))
+#definition du modele
+y = tf.nn.softmax(tf.matmul(x, W) + b)
+
+#fonction a minimiser (cout)
+cross_entropy = -tf.reduce_sum(y_*tf.log(y))
+#utilisation de l'algorithme du gradient pour la retropropagation
+train_step = tf.train.GradientDescentOptimizer(0.01).minimize(cross_entropy)
+        \end{lstlisting}
+
+
+\subsubsection{Sessions}
+
+Une fois l'étape précédente réalisée, le plus dur a été fait. Il reste seulement à lancer une session qui va s'occuper des étapes d'initialisation, et de répeter l'entrainement selon notre modèle.
+La session peut aussi être utilisée pour évaluer des tenseurs additionnels, tels que le taux de précision de notre algorithme par exemple.
+
+\newpage
+        \lstset{style=Python}
+        \begin{lstlisting}[caption=Exemple de définition d'un modèle linéaire pour le cas du MINST]
+#premiere etape: initialisation
+init = tf.initialize_all_variables()
+sess = tf.Session()
+sess.run(init)
+
+#entrainement
+for i in range(1000):
+    batch_xs, batch_ys = mnist.train.next_batch(100)
+    sess.run(train_step, feed_dict={x: batch_xs, y_: batch_ys})
+        
+  #evaluation du resultat  
+correct_prediction = tf.equal(tf.argmax(y,1), tf.argmax(y_,1))
+accuracy = tf.reduce_mean(tf.cast(correct_prediction, "float"))
+        \end{lstlisting}
+
+
+\subsection{Remarques sur l'utilisation}
+De manière générale, on retiendra que l'API Python est plus appropriée pour une utilisation applicative de TensorFlow, et que l'API C++ sera utile au développement et a la personalisation de la librairie.
+De plus, ces considérations nous amène naturellement au fait qu'il est plus appropriée de considérer TensorFlow comme un framework englobant ntore application, plutôt qu’une librairie à interfacer pour reléguer les calculs.
+Il s'agit en tout cas de l'approche qui permet réellement de pouvoir profiter de toute la puissance que peux offrir TensorFlow, qui n'est alors que limité par ce que nous somme capable de faire.
+Cependant, il reste important de noter que ce framework n'a été jusqu'à présent utilisé qu'en interne par Google, et que par conséquent il est facile de manquer de ressources sur des problèmes qui n'ont pas été documentés par Google.

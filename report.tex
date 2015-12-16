@@ -1,0 +1,128 @@
+\documentclass{report}
+\usepackage[frenchb]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{alltt}
+\usepackage{minted}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{subfig}
+\usepackage{setspace}
+\usepackage{verbatim}
+\usepackage{url}
+\usepackage[hidelinks=true]{hyperref}
+\usepackage{caption}
+
+\usepackage{listings}
+
+\definecolor{green_ruby}{rgb}{0.30, 0.62, 0.28}
+\definecolor{gray_ruby}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve_ruby}{rgb}{0.58,0,0.82}
+
+\lstdefinestyle{RubyStyle}{
+  backgroundcolor=\color{white},
+  breakatwhitespace=false,
+  breaklines=true,              
+  captionpos=b,   
+  commentstyle=\color{green_ruby},  
+  extendedchars=true,     
+  frame=single,	
+  keepspaces=true,
+  language=Ruby,
+  keywordstyle=\color{blue},
+  numbersep=5pt,
+  numberstyle=\tiny\color{gray_ruby},
+  rulecolor=\color{black},
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  stepnumber=2,
+  stringstyle=\color{mauve_ruby},
+  tabsize=2,
+}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand\headrulewidth{1pt}
+\fancyhead[L]{Web2Control}
+\fancyhead[R]{Enseirb-Matmeca}
+
+
+%%%%%%%%%%%%%%%% Variables %%%%%%%%%%%%%%%%
+\def\titre{\\WEB2CONTROL \\ \vspace{5 mm}
+Reprendre le contrôle sur mes données sociales} }
+\def\titregauche{Projet S8}
+\def\titredroite{Réalisation du backend}
+\def\filiere{informatique}
+\def\annee{$2^{\grave{e}me}$}
+\def\anneescolaire{2015/2016}
+\def\promotion{2017}
+\def\equipe{RIFKI Imane\\CHASSAIGNE Théo \\COOK Clément\\DELMON Luc \\ DURAND Antoine\\EL AMRI Mehdi\\PETRO Romain}
+\def\encadrant{LOMBARDY Sylvain} 
+\def\client{INRIA Mnemosyme}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+\begin{document}
+
+\begin{titlepage}
+
+\begin{center}
+
+% Upper part of the page
+\includegraphics[width=0.3\textwidth]{enseirb.png}\\[1cm]
+
+\textsc{\LARGE ENSEIRB-MATMECA}\\[1cm]
+
+\textsc{\Large {Filière \filiere, \annee année}}\\[0.5cm]
+\textsc{\Large {Promotion \promotion}}\\[0.5cm]
+\textbf{\huge Rapport de projet} }
+\vspace{5 mm}
+
+% Title
+\HRule \\[0.4cm]
+{ \huge \bfseries \titre}\\[0.4cm]
+
+\HRule \\[1.5cm]
+
+% Author and supervisor
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft} \large
+\emph{Auteurs :}\\
+\equipe
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft} \large
+\emph{~~~~~~~~~~~~Encadrant :} \\
+\encadrant \\
+\emph{\\~~~~~~~~~~~~Clients :} \\ 
+\client
+\end{flushleft}
+\end{minipage}
+
+\vfill
+
+% Bottom of the page
+{\large \today}
+
+\end{center}
+
+\end{titlepage}
+
+\tableofcontents
+
+
+% Présentation de notre équipe
+% Présentation de l'équipe INRIA encadrante
+% Présentation du PFA -> objectifs acquérir du bagage scientifique, application "cerise sur le gâteau"
+% 
+
+\input{api}
+\input{data}
+\input{ml-algos}
+
+\end{document}

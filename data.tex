@@ -1,0 +1,19 @@
+\chapter{Mise en forme des données}
+
+Les algorithmes de machine learning prennent en entrée des vecteurs. Cependant, les données obtenues au préalable sont rarement sous cette forme là. C'est pourquoi un travail de vectorisation en amont est presque toujours nécessaire.
+
+\section{Word2Vec}
+
+Une approche pour effectuer la vectorisation des données et de se concentrer sur le texte, en traduisant chaque mot sous forme de vecteur. De ce fait, on considère que les données extraites sont déjà sous forme de texte.
+
+Cette méthode a la particularité d'utiliser un algorithme de machine learning pour effectuer la conversion, et permet d'obtenir des vecteurs qui détiennent beaucoup plus d'informations que le mot original seul (par exemple, s'il est représenté par un identifiant). De fait, un des principaux attraits de cette méthode est qu'elle permet de trouver des informations sémantique sur les mots, sans avoir à donner des exemples.
+
+Un résultat frappant illustrant cette propriété, est par exemple l'addition du vecteur "capitale" et du vecteur "France", qui donne un vecteur très proche du vecteur "Paris". Le même constant peut être fait en remplaçant le vecteur "capitale" par le vecteur "Madrid" moins le vecteur "Espagne". Tout ceci n'ayant pas nécessité d'apprentissage supervisé sur le sens d'une capitale.
+
+\section{Vecteur d'occurrences}
+
+Une autre méthode de vectorisation du texte est de former un vecteur d'occurrences. Pour cela on crée un dictionnaire qui associe à chaque mot un unique identifiant, puis pour chaque indice du vecteur, on y écrit le nombre de fois qu'apparaît dans le texte le mot correspondant à cet id. On peut diviser ce nombre par le nombre de mots total dans le texte, pour obtenir une  fréquence ne dépendant plus de la longueur du texte analysé. Une autre astuce est de diminuer la valeur de la fréquence des mots utilisés très souvent dans tous les textes, et qui ne permettront pas d'obtenir des informations pertinentes (les déterminants par exemple).
+
+Ce vecteur ne peut cependant pas être traité tel quel, du fait de sa taille importante. On constate cependant que la majorité de ses valeurs sont nulles. Une solution consiste donc à ne stocker que les valeurs non nulles (dans la bibliothèque scikit-learn, ce sont par exemple les structures de données scipy.sparse qui permettent cela). On obtient alors des vecteurs de taille raisonnable pouvant être traités par du machine-learning.
+
+On retrouve un exemple complet de cette méthode sur la documentation de scikit-learn, à cette page \url{http://scikit-learn.org/stable/tutorial/text_analytics/working_with_text_data.html}
